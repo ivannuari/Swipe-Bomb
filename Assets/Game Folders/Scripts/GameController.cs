@@ -8,7 +8,7 @@ public class GameController : MonoBehaviour
     public Bomb bombPrefab;
 
     public event Action<SwipeData> OnSwiped;
-    public event Action<float> OnCannonMoved;
+    public event Action<Vector2> OnCannonMoved;
 
     private void Awake()
     {
@@ -20,9 +20,9 @@ public class GameController : MonoBehaviour
         OnSwiped?.Invoke(data);
     }
 
-    public void MoveCannon(float deltaX)
+    public void MoveCannon(Vector2 forceData)
     {
-        OnCannonMoved?.Invoke(deltaX);
+        OnCannonMoved?.Invoke(forceData);
     }
 }
 
