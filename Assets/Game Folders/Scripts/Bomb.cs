@@ -18,6 +18,7 @@ public class Bomb : MonoBehaviour
     {
         if(other.CompareTag("Ground"))
         {
+            Instantiate(GameController.Instance.GetExplotionFx(), transform.position, Quaternion.identity);
             Destroy(gameObject);
         }
     }
