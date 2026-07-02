@@ -8,7 +8,6 @@ public class Cannon : MonoBehaviour
 
     [Header("Force Settings")]
     [SerializeField] private float forwardForce = 15f;   // kekuatan maju (Z)
-    [SerializeField] private float lateralForce = 8f;    // kekuatan samping (X)
     [SerializeField] private float upwardForce = 4f;    // kekuatan ke atas (Y)
 
     private TrajectoryPredictor _trajectory;

@@ -237,6 +237,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 798209f7d916f764e83c7d3852d8b683, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Bomb
+  explosionRadius: 3
+  damage: 50
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!135 &2271283905738194381
 SphereCollider:
   m_ObjectHideFlags: 0

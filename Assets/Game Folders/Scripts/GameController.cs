@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class GameController : MonoBehaviour
@@ -8,14 +9,16 @@ public class GameController : MonoBehaviour
     public Bomb bombPrefab;
 
     [SerializeField] private Transform enemySpawnerPosition;
-    [SerializeField] private Enemy enemyPrefab;
+    [SerializeField] private Enemy[] enemyPrefab;
 
     [SerializeField] private GameObject[] allFxs;
 
-    private int wavesNumber = 0;
+    [SerializeField] private int wavesNumber = 0;
+    [SerializeField] private int enemyCount = 0;
 
     public event Action<SwipeData> OnSwiped;
     public event Action<Vector2> OnCannonMoved;
+    public event Action<int> OnWavesStarted;
 
     private void Awake()
     {
@@ -24,15 +27,27 @@ public class GameController : MonoBehaviour
 
     private void Start()
     {
-        SpawnEnemy();
+        StartWaves();
     }
 
-    private void SpawnEnemy()
+    private void StartWaves()
     {
-        for (int i = 0; i < wavesNumber + 5; i++)
+        wavesNumber++;
+
+        Enemy randEnemy = enemyPrefab[UnityEngine.Random.Range(0, enemyPrefab.Length)];
+        for (int i = 0; i < wavesNumber + 10; i++)
         {
-            var e = Instantiate(enemyPrefab, enemySpawnerPosition.position, Quaternion.identity);
+            Enemy e = Instantiate(randEnemy, enemySpawnerPosition.position, Quaternion.identity);
         }
+
+        OnWavesStarted?.Invoke(wavesNumber);
+        StartCoroutine(NextWaves());
+    }
+
+    IEnumerator NextWaves()
+    {
+        yield return new WaitForSeconds(25f);
+        StartWaves();
     }
 
     public void Swipe(SwipeData data)
@@ -48,6 +63,11 @@ public class GameController : MonoBehaviour
     public GameObject GetExplotionFx()
     {
         return allFxs[0];
+    }
+
+    public void EnemyDie()
+    {
+        enemyCount++;
     }
 }
 
